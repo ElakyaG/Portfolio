@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Elakya G — UI/UX Designer Portfolio</title>
+  <meta name="description" content="Portfolio of Elakya G, a UI/UX designer specializing in product design, research, and design systems." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0d10;
+      --panel: #11141a;
+      --muted: #8b93a7;
+      --text: #e8ecf3;
+      --accent: #7c5cff;
+      --accent-2: #00d4ff;
+      --ok: #22c55e;
+      --warn: #f59e0b;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 16px;
+      --ring: 0 0 0 3px rgba(124,92,255,.35);
+    }
+
+    :root.light {
+      --bg: #f7f8fb;
+      --panel: #ffffff;
+      --muted: #667085;
+      --text: #0b1324;
+      --accent: #5b3df2;
+      --accent-2: #0ea5e9;
+      --shadow: 0 8px 24px rgba(16,24,40,.08);
+      --ring: 0 0 0 3px rgba(14,165,233,.27);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(1200px 600px at 80% -10%, rgba(124,92,255,.25), transparent 60%),
+                  radial-gradient(900px 500px at -10% 20%, rgba(14,165,233,.18), transparent 55%),
+                  var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 22px; }
+    .grid { display: grid; gap: 22px; }
+    .btn { display:inline-flex; align-items:center; gap:10px; padding:12px 18px; border-radius: 999px; border:1px solid transparent; background: linear-gradient(90deg, var(--accent), var(--accent-2)); color:white; font-weight:600; text-decoration:none; box-shadow: var(--shadow); transition: transform .15s ease, box-shadow .15s ease; }
+    .btn:hover { transform: translateY(-1px); box-shadow: 0 14px 38px rgba(0,0,0,.35); }
+    .btn.ghost { background: transparent; color: var(--text); border-color: rgba(124,92,255,.45); backdrop-filter: blur(6px); }
+    .badge { display:inline-block; padding:6px 10px; border-radius:999px; background: rgba(124,92,255,.15); color: var(--text); border:1px solid rgba(124,92,255,.25); font-size:12px; }
+    .card { background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,0)); border: 1px solid rgba(255,255,255,.08); border-radius: var(--radius); box-shadow: var(--shadow); }
+    .section { padding: 80px 0; position: relative; }
+    .section h2 { font-size: clamp(28px, 4vw, 40px); margin: 0 0 14px; letter-spacing: -0.02em; }
+    .muted { color: var(--muted); }
+    .pill { border-radius: 999px; padding: 8px 12px; background: var(--panel); border:1px solid rgba(255,255,255,.06); }
+
+    .skip { position:absolute; left:-999px; top:auto; width:1px; height:1px; overflow:hidden; }
+    .skip:focus { left: 10px; top: 10px; width:auto; height:auto; padding:8px 12px; z-index: 9999; background:#111; color:#fff; border-radius: 6px; box-shadow: var(--ring); }
+
+    .nav { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(10px); background: linear-gradient(180deg, rgba(10,12,16,.7), rgba(10,12,16,.35)); border-bottom: 1px solid rgba(255,255,255,.07); }
+    .nav .row { display:flex; align-items:center; justify-content:space-between; padding:14px 0; }
+    .brand { display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.2px; }
+    .brand .logo { width:32px; height:32px; display:grid; place-items:center; border-radius:10px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); box-shadow: var(--shadow); font-weight:800; }
+    .nav ul { display:flex; gap:16px; align-items:center; list-style:none; padding:0; margin:0; }
+    .nav a { text-decoration:none; color:var(--text); padding:8px 10px; border-radius:8px; font-weight:600; }
+    .nav a.active, .nav a:hover { background: rgba(124,92,255,.15); }
+
+    .hero { display:grid; grid-template-columns: 1.1fr 0.9fr; gap: 28px; align-items:center; padding: 70px 0 40px; }
+    .hero h1 { font-size: clamp(36px, 6vw, 64px); line-height: 1.06; margin: 0 0 14px; letter-spacing: -0.03em; }
+    .hero p { font-size: clamp(16px, 1.4vw, 20px); color: var(--muted); margin: 0 0 24px; }
+    .hero .panel { padding: 22px; border-radius: var(--radius); background: radial-gradient(400px 200px at 20% 0%, rgba(14,165,233,.15), transparent 60%), var(--panel); border:1px solid rgba(255,255,255,.08); }
+
+    .hero-stats { display:grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 24px; }
+    .stat { padding:16px; border-radius: 12px; background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,0)); border:1px solid rgba(255,255,255,.08); text-align:center; }
+    .stat strong { display:block; font-size: 22px; }
+
+    .skills { grid-template-columns: repeat(4, 1fr); }
+    .skill { padding:16px; border-radius: 12px; border:1px solid rgba(255,255,255,.08); background: linear-gradient(180deg, rgba(255,255,255,.05), transparent); }
+    .skill h4 { margin: 0 0 10px; font-size: 16px; }
+    .meter { height: 10px; border-radius: 999px; background: rgba(255,255,255,.08); overflow:hidden; }
+    .bar { height: 100%; width: 0; background: linear-gradient(90deg, var(--accent), var(--accent-2)); border-radius: 999px; transition: width 1s ease-out; }
+
+    .projects { grid-template-columns: repeat(3, 1fr); }
+    .project { position:relative; overflow:hidden; border-radius: 16px; border:1px solid rgba(255,255,255,.08); background: var(--panel); }
+    .project .thumb { aspect-ratio: 16/11; background: linear-gradient(135deg, rgba(124,92,255,.25), rgba(14,165,233,.25)); display:grid; place-items:center; font-weight:800; letter-spacing: 1px; }
+    .project .body { padding:16px; }
+    .project .tags { display:flex; flex-wrap: wrap; gap:8px; }
+    .project:hover .reveal { transform: translateY(0); }
+    .reveal { position:absolute; inset:auto 0 0 0; transform: translateY(100%); transition: transform .25s ease; background: linear-gradient(180deg, rgba(11,13,16,0), rgba(11,13,16,.95)); padding: 16px; display:flex; justify-content:space-between; align-items:center; }
+
+    dialog { width:min(780px, 92vw); border:none; border-radius: 16px; padding:0; background: var(--panel); color: var(--text); box-shadow: var(--shadow); }
+    dialog::backdrop { background: rgba(0,0,0,.6); backdrop-filter: blur(2px); }
+    .modal-head { display:flex; justify-content:space-between; align-items:center; padding:16px 18px; border-bottom:1px solid rgba(255,255,255,.08); }
+    .modal-body { padding: 18px; }
+
+    .process { grid-template-columns: repeat(4, 1fr); }
+    .step { padding:16px; border:1px solid rgba(255,255,255,.08); border-radius: 12px; background: linear-gradient(180deg, rgba(255,255,255,.05), transparent); }
+
+    .timeline { position: relative; padding-left: 24px; }
+    .timeline::before { content:""; position:absolute; left:6px; top: 10px; bottom: 10px; width:2px; background: linear-gradient(var(--accent), var(--accent-2)); border-radius: 2px; }
+    .t-item { position:relative; margin: 22px 0; padding-left: 16px; }
+    .t-item::before { content:""; position:absolute; left:-2px; top:6px; width:14px; height:14px; border-radius:999px; background: var(--panel); border:2px solid var(--accent); box-shadow: var(--shadow); }
+
+    form { display:grid; gap:12px; }
+    input, textarea { width:100%; padding:12px 14px; border-radius: 12px; border:1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.04); color: var(--text); }
+    input:focus, textarea:focus { outline: none; box-shadow: var(--ring); border-color: transparent; }
+
+    footer { padding: 22px 0 40px; color: var(--muted); text-align:center; }
+
+    @media (max-width: 980px){ .hero{ grid-template-columns: 1fr; } .skills{ grid-template-columns: repeat(2,1fr);} .projects{ grid-template-columns: repeat(2,1fr);} .process{ grid-template-columns: repeat(2,1fr);} }
+    @media (max-width: 640px){ .skills{ grid-template-columns: 1fr;} .projects{ grid-template-columns: 1fr;} .process{ grid-template-columns: 1fr;} .hero-stats{ grid-template-columns: repeat(2,1fr);} }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#content">Skip to content</a>
+  <header class="nav" role="navigation" aria-label="Primary">
+    <div class="container row">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">EG</div>
+        <span>Elakya G</span>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#process">Process</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><button id="modeToggle" class="pill" title="Toggle theme" aria-pressed="false">Toggle theme</button></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="content">
+   <section class="container hero" id="home" aria-label="Hero">
+  <div>
+    <span class="badge">UI/UX · Product Design · Research</span>
+    <h1>Designing clear, humane products that ship.</h1>
+    <p>I am an aspiring UI/UX designer passionate about crafting intuitive and visually appealing digital experiences. I have a foundation in research, wireframing, and prototyping, with better experience in Figma for turning ideas into user flows and interface designs. I am eager to learn, adapt, and contribute to building accessible and user-friendly interfaces while collaborating with teams to bring creative solutions to life.</p>
+    <div style="display:flex; gap:12px; flex-wrap: wrap;">
+      <a class="btn" href="#projects">View projects</a>
+      <a class="btn ghost" href="#contact">Contact me</a>
+      <a class="btn ghost" href="https://www.linkedin.com/in/elakya-g-77920a283/" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn ghost" href="mailto:elakyagunasekaran08@gmail.com">Email Me</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><strong>5+</strong><span class="muted">Projects</span></div>
+      <div class="stat"><strong>Fresher</strong><span class="muted">Experience</span></div>
+    </div>
+  </div>
+  <div class="panel card" aria-hidden="true">
+    <canvas id="heroCanvas" width="800" height="420" style="width:100%; aspect-ratio: 16/9; border-radius:12px;"></canvas>
+  </div>
+</section>
+
+    <section class="section" id="about">
+      <div class="container">
+        <h2>About me</h2>
+        <p class="muted" style="max-width: 820px;">I am an aspiring UI/UX designer focused on creating clear and user-friendly experiences. My toolkit is growing to include user research, task flows, wireframes, and interactive prototypes. I have beginner-level experience in Figma, where I practice building components and simple design systems. I value accessibility principles, collaborative feedback, and delivering designs that balance creativity with usability.</p>
+      </div>
+    </section>
+
+    <section class="section" id="skills" aria-label="Skills">
+  <div class="container">
+    <h2>Skills Snapshot</h2>
+    <div class="grid skills">
+
+      <!-- Technical Skills -->
+      <div class="skill">
+        <h4>Figma & Prototyping</h4>
+        <div class="meter"><div class="bar" data-level="80"></div></div>
+        <p class="muted">Wireframes, prototypes, basic components</p>
+      </div>
+
+      <div class="skill">
+        <h4>HTML & CSS</h4>
+        <div class="meter"><div class="bar" data-level="70"></div></div>
+        <p class="muted">Responsive layouts, semantic structure</p>
+      </div>
+
+      <div class="skill">
+        <h4>Canva</h4>
+        <div class="meter"><div class="bar" data-level="85"></div></div>
+        <p class="muted">Graphics, presentations, quick visuals</p>
+      </div>
+
+      <!-- Soft Skills -->
+      <div class="skill">
+        <h4>Communication</h4>
+        <div class="meter"><div class="bar" data-level="90"></div></div>
+        <p class="muted">Clear and effective expression</p>
+      </div>
+
+      <div class="skill">
+        <h4>Public Speaking</h4>
+        <div class="meter"><div class="bar" data-level="88"></div></div>
+        <p class="muted">Confident presentations and talks</p>
+      </div>
+
+      <div class="skill">
+        <h4>Quick Learning</h4>
+        <div class="meter"><div class="bar" data-level="92"></div></div>
+        <p class="muted">Adaptable and eager to upskill</p>
+      </div>
+
+      <div class="skill">
+        <h4>Presentation</h4>
+        <div class="meter"><div class="bar" data-level="86"></div></div>
+        <p class="muted">Designing and delivering engaging decks</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+    <section class="section" id="projects" aria-label="Projects">
+      <div class="container">
+        <h2>Selected work</h2>
+        
+        <div class="grid projects">
+          <article class="project">
+  <div class="thumb">Banking App UI</div>
+  <div class="body">
+    <h3 style="margin:0 0 6px;">Banking Mobile Application</h3>
+    <p class="muted">Designed a modern mobile banking app in Figma with interactive prototypes, focusing on simple navigation, secure flows, and user-friendly transactions.</p>
+    <div class="tags">
+      <span class="badge">UI Design</span>
+      <span class="badge">Prototyping</span>
+      <span class="badge">Figma</span>
+    </div>
+  </div>
+  <div class="reveal">
+    <a href="https://www.figma.com/design/mGzgFOqu6JJZ9GBjTuhkhH/BMA?node-id=0-1&t=75ueUhDozNY3GbXG-1" 
+       target="_blank" 
+       style="text-decoration:none; color:inherit;">
+       <span>View Project</span><span>↗</span>
+    </a>
+  </div>
+</article>
+<article class="project">
+  <div class="thumb">Prime juices</div>
+  <div class="body">
+    <h3 style="margin:0 0 6px;">Figma Design Showcase</h3>
+    <p class="muted">
+      Developed a clean and intuitive interface in Figma, focusing on user flow clarity and visual hierarchy with interactive elements.
+    </p>
+    <div class="tags">
+      <span class="badge">UI Design</span>
+      <span class="badge">Figma</span>
+      <span class="badge">Prototyping</span>
+    </div>
+  </div>
+  <div class="reveal">
+    <a href="https://www.figma.com/design/jLHpzJneCo7AUY11fasDIj/h?node-id=0-1&t=75ueUhDozNY3GbXG-1" target="_blank" style="text-decoration:none; color:inherit;">
+      <span>View Project</span><span>↗</span>
+    </a>
+  </div>
+</article>
+<article class="project">
+  <div class="thumb">Figma Prototype Demo</div>
+  <div class="body">
+    <h3 style="margin:0 0 6px;">Interactive Prototype</h3>
+    <p class="muted">
+      Created an interactive prototype with realistic navigation flows and micro-interactions, simulating real app behavior using Figma’s prototyping tools.
+    </p>
+    <div class="tags">
+      <span class="badge">Interactive</span>
+      <span class="badge">Figma</span>
+    </div>
+  </div>
+  <div class="reveal">
+    <a href="https://www.figma.com/proto/SBUFan5ZF4psWHrGeXbrZo/Untitled?node-id=19-4&t=chVk28ispRdRuQyo-1" target="_blank" style="text-decoration:none; color:inherit;">
+      <span>View Project</span><span>↗</span>
+    </a>
+  </div>
+</article>
+
+         
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="process">
+  <div class="container">
+    <h2>How I Learn & Design</h2>
+    <div class="grid process">
+      <div class="step">
+        <h4>Explore</h4>
+        <p class="muted">I start by understanding design problems through research, observation, and inspiration.</p>
+      </div>
+      <div class="step">
+        <h4>Practice</h4>
+        <p class="muted">I translate ideas into wireframes and prototypes using Figma and other design tools.</p>
+      </div>
+      <div class="step">
+        <h4>Iterate</h4>
+        <p class="muted">I refine my designs based on feedback, usability checks, and self-review.</p>
+      </div>
+      <div class="step">
+        <h4>Present</h4>
+        <p class="muted">I showcase my work clearly through case studies, presentations, and prototypes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+    <section class="section" id="experience">
+  <div class="container">
+    <h2>Experience</h2>
+    <div class="timeline">
+      <div class="t-item">
+        <h4>UI/UX Design Intern — Codsoft</h4>
+        <p class="muted">2024 · Virtual Internship · Worked on UI/UX projects, focusing on wireframes, prototypes, and user-friendly designs.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+    <section class="section" id="contact">
+      <div class="container">
+        <h2>Contact</h2>
+        <p class="muted">Interested in working together? Send a note and I’ll get back within 24 hours.</p>
+        <form name="contact" onsubmit="return handleSubmit(event)">
+          <div class="grid" style="grid-template-columns: 1fr 1fr;">
+            <div>
+              <label for="name" class="muted">Your name</label>
+              <input id="name" name="name" placeholder="Jane Doe" required />
+            </div>
+            <div>
+              <label for="email" class="muted">Email</label>
+              <input id="email" type="email" name="email" placeholder="jane@company.com" required />
+            </div>
+          </div>
+          <div>
+            <label for="msg" class="muted">Message</label>
+            <textarea id="msg" name="message" rows="5" placeholder="A brief about your project, goals, timeline…" required></textarea>
+          </div>
+          <div style="display:flex; gap:12px; align-items:center;">
+            <button class="btn" type="submit">Send message</button>
+            <a class="btn ghost" href="mailto:elakyagunasekaran08@gmail.com?subject=Portfolio%20Enquiry">Email instead</a>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© <span id="year"></span> Elakya G · <a href="#home" style="color:inherit;">Back to top</a></p>
+    </div>
+  </footer>
+
+  <dialog id="modal-1">
+    <div class="modal-head">
+      <strong>FinFlow Onboarding — Case Study</strong>
+      <button class="pill" onclick="this.closest('dialog').close()">Close</button>
+    </div>
+    <div class="modal-body">
+      <p><strong>Outcome:</strong> Reduced time to KYC by 38%, increased completion by 16%.</p>
+      <p><strong>Role:</strong> Research, IA, flow design, hi fi UI, accessibility review.</p>
+      <p><strong>Highlights:</strong> Progressive disclosure, real time validation, empty state copy improvements.</p>
+      <p class="muted">Ask me about: experiment setup, success metrics, and how we handled regulatory constraints.</p>
+    </div>
+  </dialog>
+  <dialog id="modal-2">
+    <div class="modal-head">
+      <strong>PulseCare Mobile — Case Study</strong>
+      <button class="pill" onclick="this.closest('dialog').close()">Close</button>
+    </div>
+    <div class="modal-body">
+      <p><strong>Outcome:</strong> 21% retention uplift at day 14.</p>
+      <p><strong>Role:</strong> UX writing, design system tokens, prototyping in Figma.</p>
+      <p><strong>Highlights:</strong> Habit forming loop (cue action reward), inclusive color tokens, motion guidelines.</p>
+    </div>
+  </dialog>
+  <dialog id="modal-3">
+    <div class="modal-head">
+      <strong>InsightOps Analytics — Case Study</strong>
+      <button class="pill" onclick="this.closest('dialog').close()">Close</button>
+    </div>
+    <div class="modal-body">
+      <p><strong>Outcome:</strong> Cut query time by 45%; increased weekly active users for dashboards by 29%.</p>
+      <p><strong>Role:</strong> Research, accessibility, dev handoff, QA.</p>
+      <p><strong>Highlights:</strong> Role based IA, progressive complexity, export flows.</p>
+    </div>
+  </dialog>
+
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Theme toggle with localStorage + prefers-color-scheme
+    const root = document.documentElement;
+    const saved = localStorage.getItem('theme');
+    if (saved) { root.classList.toggle('light', saved === 'light'); }
+    else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+      root.classList.add('light');
+    }
+    const toggle = document.getElementById('modeToggle');
+    function updateToggleState(){ toggle.setAttribute('aria-pressed', root.classList.contains('light')); }
+    updateToggleState();
+    toggle.addEventListener('click', () => {
+      root.classList.toggle('light');
+      localStorage.setItem('theme', root.classList.contains('light') ? 'light' : 'dark');
+      updateToggleState();
+    });
+    window.addEventListener('keydown', (e)=>{ if(e.key.toLowerCase()==='d' && !e.altKey && !e.metaKey && !e.ctrlKey){ toggle.click(); }});
+
+    // Scrollspy
+    const links = Array.from(document.querySelectorAll('.nav a[href^="#"]'));
+    const sections = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const id = '#' + entry.target.id;
+        const link = links.find(l => l.getAttribute('href') === id);
+        if (link) { link.classList.toggle('active', entry.isIntersecting); }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px', threshold: 0.01 });
+    sections.forEach(s => obs.observe(s));
+
+    // Skills meters on view
+    const bars = document.querySelectorAll('.bar');
+    const meterObs = new IntersectionObserver((entries)=>{
+      entries.forEach(({isIntersecting, target})=>{
+        if(isIntersecting){ const lvl = target.dataset.level; target.style.width = lvl + '%'; meterObs.unobserve(target); }
+      });
+    },{ threshold: .4 });
+    bars.forEach(b => meterObs.observe(b));
+
+    // Project card -> modal
+    document.querySelectorAll('.project').forEach(card => {
+      const id = card.dataset.modal;
+      const dlg = document.getElementById(id);
+      function open(){ dlg.showModal(); }
+      card.addEventListener('click', open);
+      card.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); open(); }});
+    });
+
+    // Contact form handler (demo only)
+    function handleSubmit(e){
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(e.target).entries());
+      alert('Thanks, ' + data.name + '! I\'ll reply to ' + data.email + ' shortly.');
+      e.target.reset();
+      return false;
+    }
+    window.handleSubmit = handleSubmit;
+
+    // Decorative hero canvas particles
+    (function(){
+      const canvas = document.getElementById('heroCanvas');
+      const ctx = canvas.getContext('2d');
+      const DPR = window.devicePixelRatio || 1;
+      function resize(){
+        const rect = canvas.getBoundingClientRect();
+        canvas.width = rect.width * DPR;
+        canvas.height = rect.height * DPR;
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      const particles = Array.from({length: 80}, ()=>({
+        x: Math.random()*canvas.width,
+        y: Math.random()*canvas.height,
+        vx: (Math.random()-.5)*0.4*DPR,
+        vy: (Math.random()-.5)*0.4*DPR,
+        r: (Math.random()*2+1)*DPR
+      }));
+
+      function step(){
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        for(const p of particles){
+          p.x += p.vx; p.y += p.vy;
+          if(p.x<0||p.x>canvas.width) p.vx*=-1;
+          if(p.y<0||p.y>canvas.height) p.vy*=-1;
+        }
+        // draw connections
+        for(let i=0;i<particles.length;i++){
+          const a = particles[i];
+          for(let j=i+1;j<particles.length;j++){
+            const b = particles[j];
+            const dx=a.x-b.x, dy=a.y-b.y;
+            const d = Math.hypot(dx,dy);
+            if(d<130*DPR){
+              ctx.globalAlpha = 1 - d/(130*DPR);
+              const grad = ctx.createLinearGradient(a.x,a.y,b.x,b.y);
+              grad.addColorStop(0,'#7c5cff');
+              grad.addColorStop(1,'#00d4ff');
+              ctx.strokeStyle = grad;
+              ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+            }
+          }
+        }
+        ctx.globalAlpha = 1;
+        for(const p of particles){
+          const grad = ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*2);
+          grad.addColorStop(0,'rgba(124,92,255,0.9)');
+          grad.addColorStop(1,'rgba(124,92,255,0)');
+          ctx.fillStyle = grad;
+          ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill();
+        }
+        requestAnimationFrame(step);
+      }
+      step();
+    })();
+  </script>
+</body>
+</html>
+
+
